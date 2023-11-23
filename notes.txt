@@ -1,0 +1,5 @@
+mod_timer(timer, expires) is equivalent to:
+del_timer(timer);
+timer->expires = expires;
+add_timer(timer);
+--------------------------------------------------------------.......
