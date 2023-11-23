@@ -3,3 +3,11 @@ del_timer(timer);
 timer->expires = expires;
 add_timer(timer);
 --------------------------------------------------------------.......
+
+root@beaglebone:/boot# ls
+config-4.19.94-ti-r42      SOC.sh                     uEnv.txt
+dtbs                       System.map-4.19.94-ti-r42  vmlinuz-4.19.94-ti-r42
+initrd.img-4.19.94-ti-r42  uboot
+
+
+----------------------------------------------------------------------------------
