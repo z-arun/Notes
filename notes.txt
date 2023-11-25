@@ -13,3 +13,5 @@ initrd.img-4.19.94-ti-r42  uboot
 ----------------------------------------------------------------------------------
 
 The kernel ring buffer is line buffered, which means it's not flushed until it encounters a newline. Add a \n to the end of your printk strings:
+
+All printk() messages are printed to the kernel log buffer, which is a ring buffer exported to userspace through /dev/kmsg. The usual way to read it is using dmesg.
