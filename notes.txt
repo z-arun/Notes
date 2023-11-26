@@ -15,3 +15,14 @@ initrd.img-4.19.94-ti-r42  uboot
 The kernel ring buffer is line buffered, which means it's not flushed until it encounters a newline. Add a \n to the end of your printk strings:
 
 All printk() messages are printed to the kernel log buffer, which is a ring buffer exported to userspace through /dev/kmsg. The usual way to read it is using dmesg.
+
+------------------------------------------------------------------------------
+Interrupt controller:
+The IC hw is connected to all the peripherals (multiplexes the interrupt lines), it collected all the interrupts from all these peripherals and send appropriate sognal to the cpu core
+also it groups different interrupt linues together and based on priority it signals the cpu core.
+IC can also disale some interrupt lines temporarly.
+
+IRQ - interrupt request.
+
+top halves  -> for fast operation
+bottom halves -> for more processing of data.
