@@ -106,6 +106,6 @@ workqueue - in process context
 sleep allowed only in workqueue..
 
 ---------------------------------------------------------------------------------------
-
+compare tasklet, workqueue,softirq
 
 
