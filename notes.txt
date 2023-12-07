@@ -108,6 +108,7 @@ sleep allowed only in workqueue..
 ---------------------------------------------------------------------------------------
 compare tasklet, workqueue,softirq
 ---------------------------------------------------------------------------------------
+kmalloc()
 GFP_ATOMIC
 Used to allocate memory from interrupt handlers and other code outside of a process context. Never sleeps.
 
@@ -117,3 +118,9 @@ Normal allocation of kernel memory. May sleep.
 GFP_USER
 Used to allocate memory for user-space pages; it may sleep.
 
+-----------------------------------------------------------------------------------------------------
+The Linux kernel knows about a minimum of three memory zones: DMA-capable memory, normal memory, and high memory
+
+The kmalloc() function guarantees that the pages are physically contiguous (and virtually contiguous).
+
+The vmalloc() function works in a similar fashion to kmalloc(), except it allocates memory that is only virtually contiguous and not necessarily physically contiguous.
