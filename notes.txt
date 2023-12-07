@@ -107,5 +107,13 @@ sleep allowed only in workqueue..
 
 ---------------------------------------------------------------------------------------
 compare tasklet, workqueue,softirq
+---------------------------------------------------------------------------------------
+GFP_ATOMIC
+Used to allocate memory from interrupt handlers and other code outside of a process context. Never sleeps.
 
+GFP_KERNEL
+Normal allocation of kernel memory. May sleep.
+
+GFP_USER
+Used to allocate memory for user-space pages; it may sleep.
 
