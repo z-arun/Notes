@@ -129,4 +129,43 @@ The vmalloc() function works in a similar fashion to kmalloc(), except it alloca
 
 ________________________________________________________________________
 
-Atomic operation :
+Atomic operation  :
+normal operation  : get variable value from memory, perform opertion, write back to memeory . So mutex/semaphore need to be used
+atomic operations : all the above 3 operations are done in a single instruction cycle.
+
+2 types
+1) bit wise
+2) on integer 
+
+#define ATOMIC_INIT(i) { (i) }
+
+
+atomic64_t etx_global_variable = ATOMIC64_INIT(0);
+long atomic64_read(atomic64_t *v);
+void atomic64_set(atomic64_t *v, int i);
+void atomic64_add(int i, atomic64_t *v);
+void atomic64_sub(int i, atomic64_t *v);
+void atomic64_inc(atomic64_t *v);
+void atomic64_dec(atomic64_t *v);
+int atomic64_sub_and_test(int i, atomic64_t *v);
+int atomic64_add_negative(int i, atomic64_t *v);
+long atomic64_add_return(int i, atomic64_t *v);
+long atomic64_sub_return(int i, atomic64_t *v);
+long atomic64_inc_return(int i, atomic64_t *v);
+long atomic64_dec_return(int i, atomic64_t *v);
+int atomic64_dec_and_test(atomic64_t *v);
+int atomic64_inc_and_test(atomic64_t *v);
+set_bit(long nr, volatile unsigned long * addr) /* atomically set the bit in memory */
+clear_bit(long nr, volatile unsigned long * addr) /* atomically clear the bit in memory */
+change_bit(long nr, volatile unsigned long * addr) /*  toggle a bit in memory */
+test_and_set_bit(long nr, volatile unsigned long * addr) /* set the bit and return its old value */
+test_and_clear_bit(long nr, volatile unsigned long * addr) /* clear the bit and return its old value */
+
+
+    atomic_set(atomic_t *a, int value); /* set the value at memory location a */ 
+    atomic_add(int val, atomic_t *a); /*add val to value at memory location a */
+    atomic_read(const atomic_t *a); /* read the atomic_t value at a*/
+    atomic_inc(atomic_t *a) /* increment the value at a atomically */
+    atomic_dec(atomic_t *a) /* decrement the value at a atomically */
+    atomic_sub(int val, atomic_t *a) /* subtract the value at a by amount val */ 
+
