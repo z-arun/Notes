@@ -126,3 +126,7 @@ The kmalloc() function guarantees that the pages are physically contiguous (and 
 The vmalloc() function works in a similar fashion to kmalloc(), except it allocates memory that is only virtually contiguous and not necessarily physically contiguous.
 
 {mutex, completion, waitqueuey, signal , spin lock}
+
+________________________________________________________________________
+
+Atomic operation :
