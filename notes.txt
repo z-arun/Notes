@@ -169,5 +169,14 @@ test_and_clear_bit(long nr, volatile unsigned long * addr) /* clear the bit and 
     atomic_dec(atomic_t *a) /* decrement the value at a atomically */
     atomic_sub(int val, atomic_t *a) /* subtract the value at a by amount val */ 
 
-{, completion, waitqueuey, signal , spin lock,semaphore}
 
+
+spinlock - similar to mutex,but will not sleep , it will just spin.
+spinlock_t
+spin_lock_init(& spinlock_t)
+spin_lock()
+spin_unlock()
+spin_try_lock()
+spin_is_locked()
+------------------------------------------
+{seq_lock  , completion, waitqueuey, signal , spin lock,semaphore}
