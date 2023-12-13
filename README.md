@@ -187,6 +187,18 @@ spin_unlock_bh()
 for  bottom halves and irq
 spin_lock_irq()
 spin_unlock_irq()
+
+------------------------
+consider 10 threads but only 1 writes to the global var , 9 reads , here spinlock will not be efficient since only one thread is writing , even if the reading threads lock it other reading threads can not enter the critical section.
+
+wread-write spn-lock is the solution for this 
+mutiple threads can take read spin lock at same time , but the write lock can be taken only when no read lock is active and read spin lock can be taken only when no write spin lock is active 
+
+
+here read lock is given more priority::
+
+if more priority is needed for write lock then use seqlock.
+
 ------------------------------------------
 {seq_lock  , completion, waitqueuey, signal , spin lock,semaphore}
 ------------------------------------------
