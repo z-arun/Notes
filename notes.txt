@@ -178,6 +178,15 @@ spin_lock()
 spin_unlock()
 spin_try_lock()
 spin_is_locked()
+
+for multpile bottom halves
+spin_lock_bh()
+spin_unlock_bh()
+
+
+for  bottom halves and irq
+spin_lock_irq()
+spin_unlock_irq()
 ------------------------------------------
 {seq_lock  , completion, waitqueuey, signal , spin lock,semaphore}
 ------------------------------------------
