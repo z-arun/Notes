@@ -200,7 +200,7 @@ here read lock is given more priority::
 if more priority is needed for write lock then use seqlock.
 
 ------------------------------------------
-{seq_lock  , completion, waitqueuey, signal , spin lock,semaphore}
+{seq_lock  , waitqueuey, signal ,semaphore}
 ------------------------------------------
 memory barriers:::::::  memory barriers are used to avoid the optimization (usually the optimization causes LOAD and STORE values in a diffrenet order than what is visible in the code )(optimization by compiler and cpu itself) of STORE and LOAD of values from/to memory
 
@@ -212,4 +212,5 @@ mb()  <<- makes sure that, all the STORE/LOAD which were needed before this line
 
 -----------------------------------------------
 
+completion  -  complete_all() unlocks all thread waiting for completion but complete() will just unlock the first one, so for each thread we will have to call complete() multiple times.
 
