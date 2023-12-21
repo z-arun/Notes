@@ -1,1 +1,3 @@
 mutex,spin lock, seqlock,readwrite lock ,semaphore use cases and diff
+
+check : kthread_stop() called when thread is sleeping at sema   down();
