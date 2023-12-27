@@ -200,7 +200,7 @@ here read lock is given more priority::
 if more priority is needed for write lock then use seqlock.
 
 ------------------------------------------
-{seq_lock  , waitqueuey, signal ,semaphore}
+{waitqueuey, signal }
 ------------------------------------------
 memory barriers:::::::  memory barriers are used to avoid the optimization (usually the optimization causes LOAD and STORE values in a diffrenet order than what is visible in the code )(optimization by compiler and cpu itself) of STORE and LOAD of values from/to memory
 
