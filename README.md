@@ -214,3 +214,24 @@ mb()  <<- makes sure that, all the STORE/LOAD which were needed before this line
 
 completion  -  complete_all() unlocks all thread waiting for completion but complete() will just unlock the first one, so for each thread we will have to call complete() multiple times.
 
+
+KERNEL debugging.
+--------------
+OOPS
+
+oops happens when the kernel cant perform some operation (eg: null pointer),still the kernel will be able to run 
+Methods of debugging 
+1) CONFIG_DEBUG_INFO
+2) addr2line
+3) gdb
+4) objdump
+
+
+memeory debugging ::
+KASAN
+
+SLUB - this adds buffer over flow poison memory before and after the needed allocated memory.[poison mem | needed mem | poison mem]
+
+kmemcheck
+kgdb ??????????
+DEBUG_PAGEALLOC
