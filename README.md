@@ -219,16 +219,24 @@ KERNEL debugging.
 --------------
 OOPS
 
-
 [ 1718.397978] Unable to handle kernel NULL pointer dereference at virtual address 00000064
+
 [ 1718.412848] pgd = 2fd19747
+
 [ 1718.417255] [00000064] *pgd=00000000
+
 [ 1718.422159] Internal error: Oops: 805 [#1] PREEMPT SMP ARM
+
 [ 1718.427688] Modules linked in: main(O+) pru_rproc irq_pruss_intc pruss pm33xx wkup_m3_rproc wkup_m3_ipc remoteproc virtio virtio_ring prussv
+
 [ 1718.450438] CPU: 0 PID: 2980 Comm: insmod Tainted: G           O      4.19.94-ti-r42 #1buster
+
 [ 1718.458999] Hardware name: Generic AM33XX (Flattened Device Tree)
+
 [ 1718.465140] PC is at initfun+0x2c/0x34 [main]
+
 [ 1718.469530] LR is at wake_up_klogd+0x7c/0xa8
+
 [ 1718.473819] pc : [<bf16b02c>]    lr : [<c01ac370>]    psr: 600f0113
 [ 1718.480111] sp : d98a9d80  ip : d98a9ca8  fp : d98a9d8c
 [ 1718.485357] r10: c1506e08  r9 : db3ebf40  r8 : d98a9f38
@@ -268,7 +276,9 @@ OOPS
 [ 1718.745229] 9fc0: bd90d400 00000000 00000000 0000017b 011cf1a0 00000000 bed05cd8 00000000
 [ 1718.753444] 9fe0: bed05b08 bed05af8 00424e41 b6d03d92
 [ 1718.758523] Code: eb4106e5 e3a03000 e3a02014 e1a00003 (e5832064) 
-[ 1718.775567] ---[ end trace 22aa24a61de67dbb ]---
+[ 1718.775567] ---[ end trace 22aa24a61de67dbb ]---_
+
+    
 
 
 
