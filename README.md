@@ -293,6 +293,101 @@ Methods of debugging
 memeory debugging ::
 KASAN
 
+
+---------------------------------------------------
+
+
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+addr2line -e main.o  0x2c <------- This will print the line and c file details, here the last argument is the address we got from the oops message.
+
+
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+gdb main.ko
+then in gdb shell : list *(initfun+0x2c)
+
+
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+
+
+use objdump
+
+get the base address of module from /proc/modules
+
+main 20480 1 - Loading 0xbf15b000 (O+)<<---------------------------------------------------here
+pru_rproc 28672 0 - Live 0xbf141000
+irq_pruss_intc 20480 1 pru_rproc, Live 0xbf12d000
+pruss 16384 1 pru_rproc, Live 0xbf11a000
+pm33xx 16384 0 - Live 0xbf111000
+wkup_m3_ipc 16384 1 pm33xx, Live 0xbf108000
+wkup_m3_rproc 16384 1 - Live 0xbf100000
+remoteproc 57344 3 pru_rproc,wkup_m3_ipc,wkup_m3_rproc, Live 0xbf0d4000
+virtio 16384 1 remoteproc, Live 0xbf0cc000
+virtio_ring 28672 1 remoteproc, Live 0xbf0c0000
+pruss_soc_bus 16384 0 - Live 0xbf0b8000
+usb_f_acm 16384 2 - Live 0xbf0af000
+u_serial 20480 3 usb_f_acm, Live 0xbf0a6000
+usb_f_ecm 20480 2 - Live 0xbf09c000
+usb_f_mass_storage 53248 2 - Live 0xbf087000
+uio_pdrv_genirq 16384 0 - Live 0xbf06d000
+uio 20480 1 uio_pdrv_genirq, Live 0xbf045000
+usb_f_rndis 32768 4 - Live 0xbf036000
+u_ether 20480 2 usb_f_ecm,usb_f_rndis, Live 0xbf02d000
+libcomposite 65536 18 usb_f_acm,usb_f_ecm,usb_f_mass_storage,usb_f_rndis, Live 0xbf014000
+spidev 20480 0 - Live 0xbf000000
+
+
+
+root@beaglebone:/home/oops# objdump -dS --adjust-vma=0xbf15b000 main.ko
+
+main.ko:     file format elf32-littlearm
+
+
+Disassembly of section .text.unlikely:
+
+bf15b000 <init_module>:
+bf15b000:       e1a0c00d        mov     ip, sp
+bf15b004:       e92dd800        push    {fp, ip, lr, pc}
+bf15b008:       e24cb004        sub     fp, ip, #4
+bf15b00c:       e52de004        push    {lr}            ; (str lr, [sp, #-4]!)
+bf15b010:       ebfffffe        bl      0 <__gnu_mcount_nc>
+bf15b014:       e3000000        movw    r0, #0
+bf15b018:       e3400000        movt    r0, #0
+bf15b01c:       ebfffffe        bl      0 <printk>
+bf15b020:       e3a03000        mov     r3, #0
+bf15b024:       e3a02014        mov     r2, #20
+bf15b028:       e1a00003        mov     r0, r3
+bf15b02c:       e5832064        str     r2, [r3, #100]  ; 0x64
+bf15b030:       e89da800        ldm     sp, {fp, sp, pc}
+
+bf15b034 <cleanup_module>:
+bf15b034:       e1a0c00d        mov     ip, sp
+bf15b038:       e92dd800        push    {fp, ip, lr, pc}
+bf15b03c:       e24cb004        sub     fp, ip, #4
+bf15b040:       e52de004        push    {lr}            ; (str lr, [sp, #-4]!)
+bf15b044:       ebfffffe        bl      0 <__gnu_mcount_nc>
+bf15b048:       e3000000        movw    r0, #0
+bf15b04c:       e3400000        movt    r0, #0
+bf15b050:       ebfffffe        bl      0 <printk>
+bf15b054:       e89da800        ldm     sp, {fp, sp, pc}
+
+
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+note :: The module need to be compiled against the same kernel to insert , else it will cause "Symbol mismatch"
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+KSAn
+SLUB
+
+
+//////////////////
+
+CONFIG_DEBUG_KMEMLEAK
+
+echo scan /sys/kernel/debug/kmemleak
+cat /sys/kernel/debug/kmemleak
+
+////////////////
+CONFIG_DEBUG_LOCKDEP  --<<<< dead lock..
+
 SLUB - this adds buffer over flow poison memory before and after the needed allocated memory.[poison mem | needed mem | poison mem]
 
 kmemcheck
