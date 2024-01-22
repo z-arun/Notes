@@ -289,15 +289,8 @@ Methods of debugging
 3) gdb
 4) objdump
 
-
-memeory debugging ::
-KASAN
-
-
----------------------------------------------------
-
-
 }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+
 addr2line -e main.o  0x2c <------- This will print the line and c file details, here the last argument is the address we got from the oops message.
 
 
@@ -374,8 +367,115 @@ bf15b054:       e89da800        ldm     sp, {fp, sp, pc}
 }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
 note :: The module need to be compiled against the same kernel to insert , else it will cause "Symbol mismatch"
 }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
-KSAn
-SLUB
+
+
+KASAN -kernel address sanitizer.
+
+CONFIG_KASAN enables this
+KASAN Can detet errors related to dynamic memory allocation at run time
+eg: using mem after freeing, mem overflow, mem leak.
+
+eg:
+
+==================================================================
+ BUG: KASAN: slab-out-of-bounds in _copy_from_user+0x51/0x90
+ Write of size 19 at addr ffff888230c0d4a0 by task bash/879
+
+ CPU: 3 PID: 879 Comm: bash Tainted: G           O      5.4.0-rc5+ #16
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS ?
+\-20190711_202441-buildvm-armv7-10.arm.fedoraproject.org-2.fc31 04/01/2014
+ Call Trace:
+  dump_stack+0x5b/0x90
+  print_address_description.constprop.0+0x16/0x200
+  ? _copy_from_user+0x51/0x90
+  ? _copy_from_user+0x51/0x90
+  __kasan_report.cold+0x1a/0x41
+  ? _copy_from_user+0x51/0x90
+  kasan_report+0xe/0x20
+  check_memory_region+0x130/0x1a0
+  _copy_from_user+0x51/0x90
+  test_kasan_write+0x11/0x30 [test_kasan]
+  proc_reg_write+0x110/0x160
+  ? proc_reg_unlocked_ioctl+0x150/0x150
+  ? __pmd_alloc+0x150/0x150
+  ? __audit_syscall_entry+0x18e/0x1f0
+  ? ktime_get_coarse_real_ts64+0x46/0x60
+  ? security_file_permission+0x66/0x190
+  vfs_write+0xed/0x240
+  ksys_write+0xb4/0x150
+  ? __ia32_sys_read+0x40/0x40
+  ? up_read+0x10/0x70
+  ? do_user_addr_fault+0x3da/0x560
+  do_syscall_64+0x5e/0x190
+  entry_SYSCALL_64_after_hwframe+0x44/0xa9
+ RIP: 0033:0x7fe39aa3c150
+ Code: 73 01 c3 48 8b 0d 20 6d 2d 00 f7 d8 64 89 01 48 83 c8 ff c3\
+ 66 0f 1f 44 00 00 83 3d 4d ce 2d 00 00 75 10 b8 01 00 00 00 0f 05\
+ <48> 3d 01 f0 ff ff 73 31 c3 48 83 ec 08 e8 ee cb 01 00 48 89 04 24
+ RSP: 002b:00007fff5b7839d8 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+ RAX: ffffffffffffffda RBX: 0000000000000011 RCX: 00007fe39aa3c150
+ RDX: 0000000000000011 RSI: 00007fe39b366000 RDI: 0000000000000001
+ RBP: 00007fe39b366000 R08: 000000000000000a R09: 00007fe39b35c740
+ R10: 0000000000000022 R11: 0000000000000246 R12: 00007fe39ad14400
+ R13: 0000000000000011 R14: 0000000000000001 R15: 0000000000000000
+
+ Allocated by task 894:
+  save_stack+0x1b/0x80
+  __kasan_kmalloc.constprop.0+0xc2/0xd0
+  0xffffffffc0008022
+  do_one_initcall+0x86/0x29f
+  do_init_module+0xf8/0x350
+  load_module+0x3e57/0x4120
+  __do_sys_finit_module+0x162/0x190
+  do_syscall_64+0x5e/0x190
+  entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+ Freed by task 614:
+  save_stack+0x1b/0x80
+  __kasan_slab_free+0x12c/0x170
+  kfree+0x90/0x240
+  xdr_free_bvec+0x1a/0x30
+  xprt_release+0x10a/0x270
+  rpc_release_resources_task+0x14/0x70
+  __rpc_execute+0x253/0x590
+  rpc_async_schedule+0x44/0x70
+  process_one_work+0x476/0x760
+  worker_thread+0x73/0x680
+  kthread+0x18c/0x1e0
+  ret_from_fork+0x35/0x40
+
+ The buggy address belongs to the object at ffff888230c0d4a0
+  which belongs to the cache kmalloc-16 of size 16
+ The buggy address is located 0 bytes inside of
+  16-byte region [ffff888230c0d4a0, ffff888230c0d4b0)
+ The buggy address belongs to the page:
+ page:ffffea0008c30340 refcount:1 mapcount:0
+mapping:ffff888236403b80 index:0xffff888230c0d9c0
+ flags: 0x200000000000200(slab)
+ raw: 0200000000000200 ffffea0008b86700 0000001200000012 ffff888236403b80
+ raw: ffff888230c0d9c0 0000000080800079 00000001ffffffff 0000000000000000
+ page dumped because: kasan: bad access detected
+
+ Memory state around the buggy address:
+  ffff888230c0d380: 00 00 fc fc fb fb fc fc fb fb fc fc fb fb fc fc
+  ffff888230c0d400: fb fb fc fc fb fb fc fc fb fb fc fc fb fb fc fc
+ >ffff888230c0d480: fb fb fc fc 00 06 fc fc fb fb fc fc 00 00 fc fc
+                                   ^
+  ffff888230c0d500: 00 00 fc fc 00 00 fc fc 00 00 fc fc 00 00 fc fc
+  ffff888230c0d580: 00 00 fc fc 00 00 fc fc 00 00 fc fc 00 00 fc fc
+ ==================================================================
+>
+
+
+SLUB / SLAB
+_----------_
+
+CONFIG_DEBUG_SLUB
+
+SLUB - this adds buffer over flow poison memory before and after the needed allocated memory.
+[poison mem | needed mem | poison mem]
+
+This also helps in debugging mem read before init, mem over flow, mem using after deallocate.
 
 
 //////////////////
@@ -388,7 +488,6 @@ cat /sys/kernel/debug/kmemleak
 ////////////////
 CONFIG_DEBUG_LOCKDEP  --<<<< dead lock..
 
-SLUB - this adds buffer over flow poison memory before and after the needed allocated memory.[poison mem | needed mem | poison mem]
 
 kmemcheck
 kgdb ??????????
