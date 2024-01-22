@@ -486,7 +486,10 @@ echo scan /sys/kernel/debug/kmemleak
 cat /sys/kernel/debug/kmemleak
 
 ////////////////
-CONFIG_DEBUG_LOCKDEP  --<<<< dead lock..
+CONFIG_DEBUG_LOCKDEP  --<<<< for detection of dead lock: it will give possibility of circular dependency at run time.
+////////////////
+
+dump_stack();  <<----------------This will print how the code reach there ,like how was the flow . This will not desturb the kernel operations.
 
 
 kmemcheck
