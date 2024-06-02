@@ -495,3 +495,10 @@ dump_stack();  <<----------------This will print how the code reach there ,like 
 kmemcheck
 kgdb ??????????
 DEBUG_PAGEALLOC
+
+
+IOCTL--------------------------------------
+ioctl vs unlocked_ioctl -> ioctl uses BKL which prevents other kernel drivers 
+Big Kernel Lock (BKL) -> older implementation for multi core for synchronization - similar to spin lock.
+
+_IOX -< X is only for access 
