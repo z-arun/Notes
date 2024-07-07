@@ -540,3 +540,4 @@ which lock already depends on the new lock.
 -----
 kprobe
 perf tool.
+kdump
