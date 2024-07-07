@@ -502,3 +502,41 @@ ioctl vs unlocked_ioctl -> ioctl uses BKL which prevents other kernel drivers
 Big Kernel Lock (BKL) -> older implementation for multi core for synchronization - similar to spin lock.
 
 _IOX -< X is only for access 
+-------------------------------------------------------------------------------------------------------------------------------
+dump_stack() prints the stack trace 
+
+
+CONFIG_DEBUG_LOCKDEP will print possible dedlocks 
+static noinline int thread_b(void *unused)
+{
+  mutex_lock(&b); pr_info("%s acquired B\n", __func__);
+  mutex_lock(&a); pr_info("%s acquired A\n", __func__);
+
+  mutex_unlock(&a);
+  mutex_unlock(&b);
+
+  return 0;
+}
+
+thread_a acquired A
+thread_a acquired B
+thread_b acquired B
+
+======================================================
+WARNING: possible circular locking dependency detected
+4.19.0+ #4 Tainted: G           O
+------------------------------------------------------
+thread_b/238 is trying to acquire lock:
+(ptrval) (a){+.+.}, at: thread_b+0x48/0x90 [locking]
+
+but task is already holding lock:
+(ptrval) (b){+.+.}, at: thread_b+0x27/0x90 [locking]
+
+which lock already depends on the new lock.
+
+
+
+
+-----
+kprobe
+perf tool.
