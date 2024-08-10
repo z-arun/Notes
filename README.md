@@ -545,7 +545,8 @@ kdump
 kgdb
 kdb
 -----------------------------------------
-/proc/sys/kernel/hostname
+/proc/sys/kernel/
 
 <img width="696" alt="image" src="https://github.com/user-attachments/assets/afd9dfcb-217e-4a3a-9ce0-01f6e9c13662">
 
+/proc/sys/kernel/watchdog_thresh   <---------
