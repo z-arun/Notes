@@ -541,3 +541,11 @@ which lock already depends on the new lock.
 kprobe
 perf tool.
 kdump
+-----------------------------------------
+kgdb
+kdb
+-----------------------------------------
+/proc/sys/kernel/hostname
+
+<img width="696" alt="image" src="https://github.com/user-attachments/assets/afd9dfcb-217e-4a3a-9ce0-01f6e9c13662">
+
