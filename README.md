@@ -553,3 +553,4 @@ kdb
 
 for_each_task
 https://github.com/torvalds/linux/blob/master/include/linux/preempt.h
+pre-emptive and cooperative.
