@@ -554,3 +554,11 @@ kdb
 for_each_task
 https://github.com/torvalds/linux/blob/master/include/linux/preempt.h
 pre-emptive and cooperative.
+
+kernelboot_>
+1) arch specific /arch/..... head.s   function _start
+2) init/main.c start_kernel()
+
+
+obj-y+=FILE.o for butilt in module
+obj-m+=FILE.o for module
