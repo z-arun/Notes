@@ -551,6 +551,7 @@ kdb
 
 /proc/sys/kernel/watchdog_thresh   <---------
 
+linux_training::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 for_each_task
 https://github.com/torvalds/linux/blob/master/include/linux/preempt.h
 pre-emptive and cooperative.
@@ -562,3 +563,7 @@ kernelboot_>
 
 obj-y+=FILE.o for butilt in module
 obj-m+=FILE.o for module
+
+how system calls are implemented????????
+
+
