@@ -568,4 +568,170 @@ how system calls are implemented????????
 
 https://archive.kernel.org/oldlinux/htmldocs/kernel-api/API-call-usermodehelper.html
 
+/////////////////////////////////////
+cat /proc/devices shows all devices and major numbers.
+Major number 0 means kernel will allocate automatically
+there can be same number as major number in block devices and character devices
+
+
+/**
+ * __register_chrdev() - create and register a cdev occupying a range of minors
+ * @major: major device number or 0 for dynamic allocation
+ * @baseminor: first of the requested range of minor numbers
+ * @count: the number of minor numbers required
+ * @name: name of this range of devices
+ * @fops: file operations associated with this devices
+ *
+ * If @major == 0 this functions will dynamically allocate a major and return
+ * its number.
+ *
+ * If @major > 0 this function will attempt to reserve a device with the given
+ * major number and will return zero on success.
+ *
+ * Returns a -ve errno on failure.
+ *
+ * The name of this device has nothing to do with the name of the device in
+ * /dev. It only helps to keep track of the different owners of devices. If
+ * your module name has only one type of devices it's ok to use e.g. the name
+ * of the module here.
+ */
+int __register_chrdev(unsigned int major, unsigned int baseminor,
+		      unsigned int count, const char *name,
+		      const struct file_operations *fops)
+
+
+
+   **
+ * __unregister_chrdev - unregister and destroy a cdev
+ * @major: major device number
+ * @baseminor: first of the range of minor numbers
+ * @count: the number of minor numbers this cdev is occupying
+ * @name: name of this range of devices
+ *
+ * Unregister and destroy the cdev occupying the region described by
+ * @major, @baseminor and @count.  This function undoes what
+ * __register_chrdev() did.
+ */
+void __unregister_chrdev(unsigned int major, unsigned int baseminor,
+			 unsigned int count, const char *name)
+{
+	struct char_device_struct *cd;
+
+	cd = __unregister_chrdev_region(major, baseminor, count);
+	if (cd && cd->cdev)
+		cdev_del(cd->cdev);
+	kfree(cd);
+}
+
+foo_open(struct inode *, struct file *)
+{
+
+}
+
+foo_release(struct inode *, struct file *)
+{
+
+}
+
+foo_write(struct inode *, buffer, leng, lsoff)
+foo_read(struct inode *, buffer, leng, lsoff)
+
+two options 
+1)copy_from_user /copy_to_user
+2) zero copy using mmap
+
+-----------------------
+mknod Name { b | c } Major Minor
+-----------------------
+
+
+struct inode {
+        struct hlist_node       i_hash;              /* hash list */
+        struct list_head        i_list;              /* list of inodes */
+        struct list_head        i_dentry;            /* list of dentries */
+        unsigned long           i_ino;               /* inode number */
+        atomic_t                i_count;             /* reference counter */
+        umode_t                 i_mode;              /* access permissions */
+        unsigned int            i_nlink;             /* number of hard links */
+        uid_t                   i_uid;               /* user id of owner */
+        gid_t                   i_gid;               /* group id of owner */
+        kdev_t                  i_rdev;              /* real device node */
+        loff_t                  i_size;              /* file size in bytes */
+        struct timespec         i_atime;             /* last access time */
+        struct timespec         i_mtime;             /* last modify time */
+        struct timespec         i_ctime;             /* last change time */
+        unsigned int            i_blkbits;           /* block size in bits */
+        unsigned long           i_blksize;           /* block size in bytes */
+        unsigned long           i_version;           /* version number */
+        unsigned long           i_blocks;            /* file size in blocks */
+        unsigned short          i_bytes;             /* bytes consumed */
+        spinlock_t              i_lock;              /* spinlock */
+        struct rw_semaphore     i_alloc_sem;         /* nests inside of i_sem */
+        struct semaphore        i_sem;               /* inode semaphore */
+        struct inode_operations *i_op;               /* inode ops table */
+        struct file_operations  *i_fop;              /* default inode ops */
+        struct super_block      *i_sb;               /* associated superblock */
+        struct file_lock        *i_flock;            /* file lock list */
+        struct address_space    *i_mapping;          /* associated mapping */
+        struct address_space    i_data;              /* mapping for device */
+        struct dquot            *i_dquot[MAXQUOTAS]; /* disk quotas for inode */
+        struct list_head        i_devices;           /* list of block devices */
+        struct pipe_inode_info  *i_pipe;             /* pipe information */
+        struct block_device     *i_bdev;             /* block device driver */
+        unsigned long           i_dnotify_mask;      /* directory notify mask */
+        struct dnotify_struct   *i_dnotify;          /* dnotify */
+        unsigned long           i_state;             /* state flags */
+        unsigned long           dirtied_when;        /* first dirtying time */
+        unsigned int            i_flags;             /* filesystem flags */
+        unsigned char           i_sock;              /* is this a socket? */
+        atomic_t                i_writecount;        /* count of writers */
+        void                    *i_security;         /* security module */
+        __u32                   i_generation;        /* inode version number */
+        union {
+                void            *generic_ip;         /* filesystem-specific info */
+        } u;
+};
+
+
+struct file {
+	atomic_long_t			f_count;
+	spinlock_t			f_lock;
+	fmode_t				f_mode;
+	const struct file_operations	*f_op;
+	struct address_space		*f_mapping;
+	void				*private_data;
+	struct inode			*f_inode;
+	unsigned int			f_flags;
+	unsigned int			f_iocb_flags;
+	const struct cred		*f_cred;
+	/* --- cacheline 1 boundary (64 bytes) --- */
+	struct path			f_path;
+	union {
+		/* regular files (with FMODE_ATOMIC_POS) and directories */
+		struct mutex		f_pos_lock;
+		/* pipes */
+		u64			f_pipe;
+	};
+	loff_t				f_pos;
+#ifdef CONFIG_SECURITY
+	void				*f_security;
+#endif
+	/* --- cacheline 2 boundary (128 bytes) --- */
+	struct fown_struct		*f_owner;
+	errseq_t			f_wb_err;
+	errseq_t			f_sb_err;
+#ifdef CONFIG_EPOLL
+	struct hlist_head		*f_ep;
+#endif
+	union {
+		struct callback_head	f_task_work;
+		struct llist_node	f_llist;
+		struct file_ra_state	f_ra;
+		freeptr_t		f_freeptr;
+	};
+	/* --- cacheline 3 boundary (192 bytes) --- */
+} __randomize_layout
+
+
+
 
