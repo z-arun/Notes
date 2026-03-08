@@ -1,4 +1,38 @@
-8mod_timer(timer, expires) is equivalent to:
+Install kbuild system and needed headers:
+
+sudo apt install linux-headers
+
+Makefile:
+
+obj-m += main.o
+
+above line informing kernel to build main.ko loadable module from main.o from main.c
+
+all:
+	make -C /lib/modules/<kernel version>/build M=${PWD} modules
+clean:
+	make -C /lib/modules/<kernel version>/build M=${PWD} clean
+
+kBuild system and main make files are in /lib/modules/<kernel version>/build
+
+make will generate files :
+
+  main.mod.c  main.mod.o   modules.order  Module.symvers
+
+main.mod.c:
+An auto‑generated C source file that contains the module’s metadata and symbol dependency information, derived from your object files and MODULE_* macros.
+
+modules.ko:
+A text file that lists kernel modules (their .ko paths) in the exact order they were built in the current build directory tree
+
+Module.symvers:
+A symbol versioning index file that lists exported symbols from modules and/or the kernel, along with their CRC checksums and owning module.
+
+
+
+---------------------------------------------------------------------
+
+mod_timer(timer, expires) is equivalent to:
 del_timer(timer);
 timer->expires = expires;
 add_timer(timer);
