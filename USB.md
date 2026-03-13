@@ -90,3 +90,27 @@ Disconnect: A downstream port at which the device is connected enters disconnect
 Connect:  A downstream port enters connect state when there is an Idle state for a minimum 2.5 uS and not more than 2 mS
 
   
+---------------------------------------------------------
+Types of descriptors :
+
+1) Device desc
+2) Configuration
+3) Interface
+4) endpoint
+5) string
+
+
+Device descriptor :
+  -Configuration descriptor 1
+    - interface descriptor 1
+        - End point descriptor 1
+        - End point descriptor 2
+    - interface descriptor 2
+    
+  -Configuration descriptor 2
+
+  Multiple configuration in a single device is rare (eg: Some Harddisks contains two configurations, 1 bus , 2 self powered  eg2: Some old printers config 1 - printer only , config 2  - printer + scanner )
+
+  Multiple interfaces are common :
+  Eg:
+  Printer + scanner + fax....
