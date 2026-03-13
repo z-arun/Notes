@@ -13,6 +13,26 @@ Each device is identified by VID/PID
 
 PIN :
 +5V (Vbus), GND, D+, D-
+-------------------------------------------------
+USB 3.0
+
+GND
+VBUS (Can provide diff voltag levels 5v, 12v ...)
+CC - configuration channel (Used for role negotiationa and power delivery and max deliverable current based on the pull          up/down resisters on host / device side )
+TX+
+TX-
+RX+
+RX-
+D+
+D-
+sbu - side band use - dp over usb , hdmi over use 
+
+
+--------------------------------------------------
+
+LSB always send first in USB 
+
+---------------------------------------------------
 
 OTG: On the Go - Role negotiation.
 -----------------------------------------------------------
