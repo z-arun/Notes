@@ -114,3 +114,10 @@ Device descriptor :
   Multiple interfaces are common :
   Eg:
   Printer + scanner + fax....
+---------------------------
+usb device driver 
+usb core
+usb host contoller driver
+host controller
+device
+
