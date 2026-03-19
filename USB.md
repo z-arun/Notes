@@ -115,9 +115,18 @@ Device descriptor :
   Eg:
   Printer + scanner + fax....
 ---------------------------
+flow
+|
+>
 usb device driver 
 usb core
 usb host contoller driver
 host controller
 device
-
+-----------------------------
+End points ::
+1) control endpoints - all devices needs this - for sending commands
+2) interrupt end points - transfer small data when host asks for device data , for devices which requires guareented response time like keyboard and mouse
+3) bulk end points - for large data transfer like -MSD
+4) isochronous endpoints  - large data, no guarenty data is transfered, eg: video , audio
+    
