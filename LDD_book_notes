@@ -5,3 +5,27 @@ process, memory, device , network, file system management
 types on dd:
 
 char, block , nw
+
+----------------------------------
+
+If we modify the kernel code/add new driver and release product with it, we do not need to share the code with public/no need to up stream it 
+
+Just need to share the code with product user
+
+Companies usually upstream code since it easy to maintain - automatic rebase for all kernel releases.
+
+-----------------------------------
+printk(KERNEL_ALERT "test log");
+
+change log elevels:
+
+cat /proc/sys/kernel/printk
+
+logs are stored to /var/log/kern.log
+
+------------------------------------
+
+No floating point operations in kernel space.
+
+__Example_function() - if function starts with __, it means its low level.
+__------------------------------------
