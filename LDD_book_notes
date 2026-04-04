@@ -21,8 +21,8 @@ change log elevels:
 
 cat /proc/sys/kernel/printk
 
-logs are stored to /var/log/kern.log
-
+kernel logs are stored to /var/log/kern.log
+journal logs are stored in /var/log/messages
 ------------------------------------
 
 No floating point operations in kernel space.
@@ -38,3 +38,5 @@ current pid in module_init in any kernel module, it will print details of "lsmod
 -----------------------------------------------------------------
 
 kernel module build for one version will not work on another version.
+------------------------------------------------------------------
+
