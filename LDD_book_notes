@@ -29,3 +29,12 @@ No floating point operations in kernel space.
 
 __Example_function() - if function starts with __, it means its low level.
 __------------------------------------
+
+current - its a pointer point to the task_struct of the current process
+it will have various field including name, pid ...
+IMPORTANT: its pointing to current_task of the application process, say we print
+current pid in module_init in any kernel module, it will print details of "lsmod" , since current points to lsmod task_struct
+
+-----------------------------------------------------------------
+
+kernel module build for one version will not work on another version.
