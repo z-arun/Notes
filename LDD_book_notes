@@ -39,4 +39,8 @@ current pid in module_init in any kernel module, it will print details of "lsmod
 
 kernel module build for one version will not work on another version.
 ------------------------------------------------------------------
-
+kernel modules are stored @ /lib/modules/<kernel version>/kernel
+kernel modules  that are to be loaded at boot can be mentioned in /etc/modules-load.d/modules.conf
+blacklist <module name>
+copy all the module to  /lib/modules/<kernel version>/kernel then run "depmode"
+Then run modprobe <module name without .ko>
