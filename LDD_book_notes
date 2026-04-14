@@ -44,3 +44,7 @@ kernel modules  that are to be loaded at boot can be mentioned in /etc/modules-l
 blacklist <module name>
 copy all the module to  /lib/modules/<kernel version>/kernel then run "depmode"
 Then run modprobe <module name without .ko>
+--------------------------------------------------------------------------
+u32 cpu_to_le32 (u32);
+u32 le32_to_cpu (u32);
+these are used to conver the endians before transfer from/to other devices on different endian.
