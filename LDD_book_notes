@@ -68,3 +68,5 @@ root@beaglebone:/home/args#
 ------------------------------------------------------------------------
 strace/ftrace
 ------------------------------------------------------------------------
+/proc/sys/kernel/sysrq can trigger multiple operations when the system is hang , like trigger reset ...
+------------------------------------------------------------------------
