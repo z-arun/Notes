@@ -70,3 +70,16 @@ strace/ftrace
 ------------------------------------------------------------------------
 /proc/sys/kernel/sysrq can trigger multiple operations when the system is hang , like trigger reset ...
 ------------------------------------------------------------------------
+kmalloc(size, flag) allocates continuous memory with out initializing to 0
+flag :
+GFP_KERNEL - can sleep (do not use it interrupt)
+GFP_ATOMIC - wont sleep , can use in interrupt.
+GFP_DMA - allocate in DMA region
+
+free with kfree(ptr)
+-----------------------------------------------------------------------
+HIGHMEM is applicable only for 32 bit processor and when it cannot map memory size greater than 4GB.
+------------------------------------------------------------------------
+
+
+
