@@ -48,3 +48,23 @@ Then run modprobe <module name without .ko>
 u32 cpu_to_le32 (u32);
 u32 le32_to_cpu (u32);
 these are used to conver the endians before transfer from/to other devices on different endian.
+
+--------------------------------------------------------------------------
+printk_ratelimit helps to avoid continuous prints, 
+/proc/sys/kernel/printk_ratelimit_burst sets the max continuous prints allowed,
+/proc/sys/kernel/printk_ratelimit - delay for enabling the prints again after limiting.
+
+if(printk_ratelimit())
+{
+  printk("hello \n");
+}
+
+root@beaglebone:/home/args# cat /proc/sys/kernel/printk_ratelimit
+5
+root@beaglebone:/home/args# cat /proc/sys/kernel/printk_ratelimit_burst
+10
+root@beaglebone:/home/args#
+
+------------------------------------------------------------------------
+strace/ftrace
+------------------------------------------------------------------------
