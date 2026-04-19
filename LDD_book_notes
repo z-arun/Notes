@@ -96,3 +96,7 @@ allocate_page()   allocate_pages()   __free_page()  __free_pages()  can be used 
 order ie 2^order.
 __free_page() expects page struct * as arg
 but free_page() expects the address of the page as argument (which is page_address(struct page *))
+
+
+vmalloc(size), vfree() these allocated continuous virtual memory but fragmented physical memory
+use only when need to allocate large memory , it will be slow also
