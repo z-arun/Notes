@@ -89,4 +89,5 @@ use kmem_cache when to allocate multiple objects of same size .
 eg: used in core NW related drivers for fast allocation.
 allocation is fast and error occurance can be easly detected.
 
-
+use mempool along with kmem_cache_* to reserver memory , which will never fail , even in the memory is critically used.
+mempool_create_slab_pool() ....  mempool_alloc() ... mempool_free() .... mempool_destroy()
