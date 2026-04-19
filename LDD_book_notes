@@ -80,6 +80,13 @@ free with kfree(ptr)
 -----------------------------------------------------------------------
 HIGHMEM is applicable only for 32 bit processor and when it cannot map memory size greater than 4GB.
 ------------------------------------------------------------------------
+kmem_cache_create 
+kmem_cache_alloc
+kmem_cache_free
+kmem_cache_destroy 
 
+use kmem_cache when to allocate multiple objects of same size .
+eg: used in core NW related drivers for fast allocation.
+allocation is fast and error occurance can be easly detected.
 
 
