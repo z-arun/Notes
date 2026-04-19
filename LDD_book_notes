@@ -91,3 +91,8 @@ allocation is fast and error occurance can be easly detected.
 
 use mempool along with kmem_cache_* to reserver memory , which will never fail , even in the memory is critically used.
 mempool_create_slab_pool() ....  mempool_alloc() ... mempool_free() .... mempool_destroy()
+
+allocate_page()   allocate_pages()   __free_page()  __free_pages()  can be used to allocate pages, second arg of allocate_pages is the 
+order ie 2^order.
+__free_page() expects page struct * as arg
+but free_page() expects the address of the page as argument (which is page_address(struct page *))
