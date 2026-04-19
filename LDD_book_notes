@@ -100,3 +100,15 @@ but free_page() expects the address of the page as argument (which is page_addre
 
 vmalloc(size), vfree() these allocated continuous virtual memory but fragmented physical memory
 use only when need to allocate large memory , it will be slow also
+
+per cpu variables - each  core will have its own copy of the variable, updating once will not affect the other one
+DEFINE_PER_CPU(int, a)
+this_cpu_read(var);        // read
+this_cpu_write(var, val);  // write
+this_cpu_inc(var);         // increment by 1
+this_cpu_dec(var);         // decrement by 1
+this_cpu_add(var, val);    // add value
+this_cpu_sub(var, val);    // subtract value
+
+preemptive -  CPU can suspend current running task and give cpu to another task
+cooperative - cpu waits until the current task release the cpu (eg by calling yield()) to give the cpu to another task.
