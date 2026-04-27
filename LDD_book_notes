@@ -112,3 +112,9 @@ this_cpu_sub(var, val);    // subtract value
 
 preemptive -  CPU can suspend current running task and give cpu to another task
 cooperative - cpu waits until the current task release the cpu (eg by calling yield()) to give the cpu to another task.
+
+-------------------------------------------------------------------------------------------
+synchronisation:
+RCU -read copy update: use when there are many readers and few writers.
+writer creates a copy and update the copy , wait under all readers complete read, update to use new value.
+
