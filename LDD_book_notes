@@ -118,3 +118,18 @@ synchronisation:
 RCU -read copy update: use when there are many readers and few writers.
 writer creates a copy and update the copy , wait under all readers complete read, update to use new value.
 
+rcu_read_lock()
+rcu_dereference()
+rcu_read_unlock()
+
+create new
+copy existing to new
+update new 
+
+old_copy = rcu_dereference_protected(existing) // make a copy to kfree later.
+rcu_assign_pointer(existing, new)
+
+synchronize_rcu()
+kfree(old_copy)
+
+---------------------------------------------------------------------------
