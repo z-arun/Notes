@@ -133,3 +133,17 @@ synchronize_rcu()
 kfree(old_copy)
 
 ---------------------------------------------------------------------------
+read a 64 bit counter on 32 bit machine and handle overflow ::
+
+u64 read_counter(void)
+{
+    u32 hi1, lo, hi2;
+
+    do {
+        hi1 = counter_hi;
+        lo  = counter_lo;
+        hi2 = counter_hi;
+    } while (hi1 != hi2);
+
+    return ((u64)hi1 << 32) | lo;
+}
