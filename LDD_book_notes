@@ -147,3 +147,27 @@ u64 read_counter(void)
 
     return ((u64)hi1 << 32) | lo;
 }
+------------------------------------------------------------------------
+An inode struct stores:
+
+File type (regular, dir, etc.)
+Permissions
+Owner (UID/GID)
+Size
+Timestamps (atime, mtime, ctime)
+Block pointers / mapping
+Reference counts
+
+-------------------------------------------------------------
+A file struct has ::
+
+struct file = runtime handle to an open file
+Holds:
+
+file position
+access mode
+ops pointer
+private driver data
+
+-------------------------------------------------------------
+
